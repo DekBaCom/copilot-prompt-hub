@@ -87,21 +87,31 @@
     });
   }
 
+  const OFFICIAL_BADGE = `<span class="source-badge official" title="จาก Microsoft Official / PnP Community">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+    Microsoft Official
+  </span>`;
+
   function createPromptCard(p, cat, idx) {
+    const isOfficial = p.source === 'official';
     const card = document.createElement('div');
-    card.className = 'prompt-card';
+    card.className = `prompt-card${isOfficial ? ' is-official' : ''}`;
     card.setAttribute('role', 'listitem');
     card.style.animationDelay = `${idx * 0.04}s`;
     card.style.animation = 'fadeUp 0.4s ease both';
 
     card.innerHTML = `
+      ${isOfficial ? '<div class="card-official-strip" aria-hidden="true"></div>' : ''}
       <div class="card-top">
         <div class="card-icon" style="background:${cat.bg || 'rgba(0,120,212,0.12)'}">
           <span style="font-size:1.4rem;line-height:1">${cat.icon || '📄'}</span>
         </div>
         <div class="card-meta">
-          <div class="card-category" style="background:${cat.bg};color:${cat.color}">
-            ${cat.label || p.category}
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+            <div class="card-category" style="background:${cat.bg};color:${cat.color};margin-bottom:0">
+              ${cat.label || p.category}
+            </div>
+            ${isOfficial ? OFFICIAL_BADGE : ''}
           </div>
           <h3 class="card-title">${escapeHtml(p.title)}</h3>
         </div>
@@ -245,13 +255,24 @@
   function openModal(p) {
     const cat = CATEGORIES.find(c => c.id === p.category) || {};
     const diffLevel = p.difficulty || 1;
+    const isOfficial = p.source === 'official';
 
     modalContent.innerHTML = `
-      <div class="modal-category-badge" style="background:${cat.bg};color:${cat.color}">
-        ${cat.icon || ''} ${cat.label || p.category}
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <div class="modal-category-badge" style="background:${cat.bg};color:${cat.color}">
+          ${cat.icon || ''} ${cat.label || p.category}
+        </div>
+        ${isOfficial ? OFFICIAL_BADGE : ''}
       </div>
       <h2 class="modal-title" id="modalTitle">${escapeHtml(p.title)}</h2>
       <p class="modal-desc">${escapeHtml(p.desc)}</p>
+
+      ${isOfficial && p.sourceUrl ? `
+      <div class="modal-source-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ms-blue-light);flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span style="font-size:0.8rem;color:var(--text-muted)">Prompt จาก Microsoft Official / PnP Community —</span>
+        <a href="${p.sourceUrl}" target="_blank" rel="noopener">ดูแหล่งที่มา</a>
+      </div>` : ''}
 
       ${p.useCase ? `
       <div class="modal-section">

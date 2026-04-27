@@ -356,6 +356,7 @@ h1, h2, h3, h4, h5 {
   color: var(--text-muted);
   font-weight: 500;
 }
+.stat-num--official { color: var(--ms-blue-light); }
 .stat-divider {
   width: 1px; height: 40px;
   background: var(--border-color);
@@ -1311,6 +1312,65 @@ h1, h2, h3, h4, h5 {
   .pill { padding: 5px 12px; font-size: 0.8rem; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
 }
+
+/* ============================
+   SOURCE BADGE
+   ============================ */
+.source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+.source-badge.official {
+  background: rgba(0,120,212,0.12);
+  color: var(--ms-blue-light);
+  border: 1px solid rgba(0,120,212,0.25);
+}
+.source-badge.official svg { color: var(--ms-blue-light); }
+
+/* Official card highlight */
+.prompt-card.is-official {
+  border-color: rgba(0,120,212,0.15);
+}
+.prompt-card.is-official:hover {
+  border-color: rgba(0,120,212,0.45);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(0,120,212,0.12);
+}
+
+/* Official strip at top of card */
+.card-official-strip {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ms-blue), var(--ms-blue-light));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* Source section in modal */
+.modal-source-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(0,120,212,0.06);
+  border: 1px solid rgba(0,120,212,0.12);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+}
+.modal-source-row a {
+  font-size: 0.8rem;
+  color: var(--ms-blue-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.modal-source-row a:hover { color: white; }
 
 /* ============================
    SCROLLBAR

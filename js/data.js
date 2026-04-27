@@ -4,18 +4,359 @@
 // ============================================================
 
 const CATEGORIES = [
-  { id: 'writing',    label: 'เขียน & เนื้อหา',    icon: '✍️', color: '#0078D4', bg: 'rgba(0,120,212,0.12)' },
-  { id: 'analysis',  label: 'วิเคราะห์ข้อมูล',     icon: '📊', color: '#7B61FF', bg: 'rgba(123,97,255,0.12)' },
-  { id: 'coding',    label: 'เขียนโค้ด',            icon: '💻', color: '#00B4D8', bg: 'rgba(0,180,216,0.12)' },
-  { id: 'marketing', label: 'การตลาด',              icon: '📣', color: '#F77F00', bg: 'rgba(247,127,0,0.12)' },
-  { id: 'hr',        label: 'ทรัพยากรบุคคล',        icon: '👥', color: '#06D6A0', bg: 'rgba(6,214,160,0.12)' },
-  { id: 'education', label: 'การศึกษา',              icon: '🎓', color: '#FF6B6B', bg: 'rgba(255,107,107,0.12)' },
-  { id: 'meeting',   label: 'ประชุม & สรุป',         icon: '📋', color: '#50E6FF', bg: 'rgba(80,230,255,0.12)' },
-  { id: 'customer',  label: 'บริการลูกค้า',          icon: '🤝', color: '#A78BFA', bg: 'rgba(167,139,250,0.12)' },
+  { id: 'outlook',   label: 'Outlook / อีเมล',      icon: '📧', color: '#0078D4', bg: 'rgba(0,120,212,0.12)' },
+  { id: 'teams',     label: 'Microsoft Teams',       icon: '💬', color: '#6264A7', bg: 'rgba(98,100,167,0.12)' },
+  { id: 'm365',      label: 'M365 Copilot Chat',     icon: '🚀', color: '#50E6FF', bg: 'rgba(80,230,255,0.12)' },
+  { id: 'writing',   label: 'เขียน & เนื้อหา',       icon: '✍️', color: '#0078D4', bg: 'rgba(0,120,212,0.12)' },
+  { id: 'analysis',  label: 'วิเคราะห์ข้อมูล',      icon: '📊', color: '#7B61FF', bg: 'rgba(123,97,255,0.12)' },
+  { id: 'coding',    label: 'เขียนโค้ด',             icon: '💻', color: '#00B4D8', bg: 'rgba(0,180,216,0.12)' },
+  { id: 'marketing', label: 'การตลาด',               icon: '📣', color: '#F77F00', bg: 'rgba(247,127,0,0.12)' },
+  { id: 'hr',        label: 'ทรัพยากรบุคคล',         icon: '👥', color: '#06D6A0', bg: 'rgba(6,214,160,0.12)' },
+  { id: 'education', label: 'การศึกษา',               icon: '🎓', color: '#FF6B6B', bg: 'rgba(255,107,107,0.12)' },
+  { id: 'meeting',   label: 'ประชุม & สรุป',          icon: '📋', color: '#50E6FF', bg: 'rgba(80,230,255,0.12)' },
+  { id: 'customer',  label: 'บริการลูกค้า',           icon: '🤝', color: '#A78BFA', bg: 'rgba(167,139,250,0.12)' },
 ];
+
+// source: 'official' = Microsoft Official / PnP Community, 'original' = สร้างใหม่
 
 // difficulty: 1=ง่าย, 2=ปานกลาง, 3=ยาก
 const PROMPTS = [
+
+  // ===== OUTLOOK — จาก Microsoft PnP Official =====
+  {
+    id: 'ol001',
+    category: 'outlook',
+    source: 'official',
+    title: 'จัดลำดับความสำคัญอีเมลประจำวัน',
+    desc: 'ให้ Copilot วิเคราะห์ inbox และคัดเลือก 5 อีเมลสำคัญที่สุด พร้อมสรุปแต่ละฉบับ',
+    prompt: `Rank my inbox in order of priority, and then summarize them so I can focus on the most important ones. Rank them based on the frequency of the communications in the last two weeks, my organization structure, and important context in the messages. Give me the most important 5 emails, with their summaries, according to their ranking.`,
+    output: `**อีเมลสำคัญ 5 ฉบับ (เรียงตามลำดับความสำคัญ):**
+
+1. 🔴 **[CEO] Q4 Budget Approval** — รอการตอบรับอนุมัติงบประมาณภายในวันนี้
+2. 🔴 **[ลูกค้า A] Project Deadline** — ขอเลื่อน deadline เป็นวันศุกร์
+3. 🟡 **[ทีม] Weekly Sync** — ต้องการวาระประชุม
+4. 🟡 **[HR] Annual Review Form** — ส่งก่อน 15 สิงหาคม
+5. 🟢 **[Supplier] Invoice** — ใบแจ้งหนี้รอตรวจสอบ`,
+    tags: ['Outlook', 'อีเมล', 'Inbox', 'ลำดับความสำคัญ'],
+    difficulty: 1,
+    useCase: 'เริ่มต้นวันทำงาน, จัดการ inbox, ประหยัดเวลาอ่านอีเมล',
+    sourceUrl: 'https://github.com/pnp/copilot-prompts'
+  },
+  {
+    id: 'ol002',
+    category: 'outlook',
+    source: 'official',
+    title: 'สรุป Email Thread ยาว',
+    desc: 'ย่อ email chain ที่ยาวและซับซ้อนให้เป็น 3 ประเด็นหลักที่ต้องรู้',
+    prompt: `Summarize this email thread. Include:
+- Main topic
+- Key decisions
+- What I need to do next`,
+    output: `**สรุป Email Thread: "Project Alpha Launch"**
+
+**หัวข้อหลัก:** วางแผนการ launch สินค้าใหม่ช่วงปลายไตรมาส 3
+
+**การตัดสินใจสำคัญ:**
+- เลื่อนวัน launch จาก 20 ส.ค. เป็น 1 ก.ย.
+- อนุมัติงบ marketing เพิ่ม 200,000 บาท
+- ใช้ agency ภายนอกสำหรับ social media
+
+**สิ่งที่คุณต้องทำ:**
+→ ส่ง brief ให้ agency ภายใน 3 วัน
+→ อัปเดต timeline ให้ทีม dev`,
+    tags: ['Outlook', 'สรุป', 'Email Thread', 'ประหยัดเวลา'],
+    difficulty: 1,
+    useCase: 'เข้าใจ thread ยาว, เพิ่งกลับมาจากลา, ก่อนตอบอีเมล',
+    sourceUrl: 'https://github.com/pnp/copilot-prompts'
+  },
+  {
+    id: 'ol003',
+    category: 'outlook',
+    source: 'official',
+    title: 'จัดตาราง Meeting วันจันทร์',
+    desc: 'แสดงรายการประชุมวันจันทร์พร้อมผู้เข้าร่วมในรูปแบบอ่านง่าย ไม่มีเวลา',
+    prompt: `Organize my Monday meetings in a structured list format. At the top, include a heading labeled 'Monday.' Under this heading, list each meeting title as the primary bullet point. Indent and list the names of up to 10 attendees as sub-bullets beneath their respective meetings. Do not include meeting times. Keep the layout clean and easy to read.`,
+    output: `**Monday**
+
+• Product Roadmap Review
+  - สมชาย วงศ์ดี (PM)
+  - นิดา รักงาน (Dev Lead)
+  - วิชัย ใจดี (Design)
+
+• Client Demo — Company XYZ
+  - คุณ Smith (ลูกค้า)
+  - ทีม Sales (3 คน)
+
+• Weekly All-Hands
+  - ทีมงานทั้งหมด (24 คน)`,
+    tags: ['Outlook', 'Calendar', 'ประชุม', 'จัดตาราง'],
+    difficulty: 1,
+    useCase: 'เริ่มต้นสัปดาห์, วางแผนวันจันทร์, ภาพรวม meeting',
+    sourceUrl: 'https://github.com/pnp/copilot-prompts'
+  },
+  {
+    id: 'ol004',
+    category: 'outlook',
+    source: 'official',
+    title: 'วางแผน Meeting สัปดาห์ถัดไป',
+    desc: 'สร้างภาพรวม meeting สัปดาห์หน้าแบบจัดลำดับ ช่วยเตรียมตัวล่วงหน้า',
+    prompt: `Please prepare an overview of my meetings for the upcoming week with the following details: List all meetings where I am the organizer, but exclude those that already have an agenda. Sort these by date. List meetings where I am mentioned in the agenda and have specific tasks or action items to prepare. Sort these after the first category. List any remaining relevant meetings that do not fall into the above categories but may still require my attention. Do not include recurring meetings such as status meetings or routine check-ins unless I have a specific task to prepare. Format the output in a structured way, grouping by category and sorting by date within each category.`,
+    output: `**ภาพรวม Meeting สัปดาห์ถัดไป**
+
+**📋 ฉันเป็น Organizer (ยังไม่มี Agenda):**
+- จ. 3 มิ.ย. — Budget Planning Workshop *(ต้องสร้าง agenda)*
+- พ. 5 มิ.ย. — Team Retrospective *(ต้องสร้าง agenda)*
+
+**✅ ฉันมี Action Items ที่ต้องเตรียม:**
+- อ. 4 มิ.ย. — Steering Committee → เตรียม KPI Report Q2
+- ศ. 7 มิ.ย. — Partner Review → เตรียม Proposal v2
+
+**📌 Meeting อื่นที่ควรสนใจ:**
+- พฤ. 6 มิ.ย. — All-Hands Company Update`,
+    tags: ['Outlook', 'Calendar', 'วางแผน', 'สัปดาห์'],
+    difficulty: 1,
+    useCase: 'ทุกวันศุกร์เพื่อเตรียมสัปดาห์หน้า, เพิ่ม productivity',
+    sourceUrl: 'https://github.com/pnp/copilot-prompts'
+  },
+
+  // ===== TEAMS — จาก Microsoft PnP Official =====
+  {
+    id: 'tm001',
+    category: 'teams',
+    source: 'official',
+    title: 'สรุป Meeting Minutes จาก Transcript',
+    desc: 'แปลง transcript การประชุม Teams เป็นรายงานการประชุมแบบตารางพร้อม action items',
+    prompt: `Prepare a meeting minutes in a tabular format with following sections "Meeting title" - get the title from the meeting invite, "Attendees" - List all the name of the attendees who participated in the call, "Meeting time" - Actual time of the meeting scheduled, "Meeting duration" - calculate the time in minutes of the actual time taken for the call, "Discussion" - summarize the items discussed during the call and list the key insights, "Action items" - create a sub table with the following columns "no", "action items", "assigned to", "time frame"`,
+    output: `| ส่วน | รายละเอียด |
+|---|---|
+| **Meeting Title** | Q3 Sales Review |
+| **Attendees** | สมชาย, นิดา, วิชัย, คุณ Smith |
+| **Meeting Time** | 14:00 น. |
+| **Duration** | 47 นาที |
+| **Discussion** | ทบทวนผล Q3, วางแผน Q4, งบประมาณ |
+
+**Action Items:**
+| # | งาน | ผู้รับผิดชอบ | กำหนดส่ง |
+|---|---|---|---|
+| 1 | จัดทำ Sales Report | สมชาย | 15 ส.ค. |
+| 2 | ติดต่อ Supplier | นิดา | 20 ส.ค. |`,
+    tags: ['Teams', 'Meeting Minutes', 'Transcript', 'สรุป'],
+    difficulty: 1,
+    useCase: 'หลังประชุม Teams, สร้างเอกสารประชุม, แจก Action Items',
+    sourceUrl: 'https://github.com/pnp/copilot-prompts'
+  },
+  {
+    id: 'tm002',
+    category: 'teams',
+    source: 'official',
+    title: 'เตรียมตัวสำหรับประชุมถัดไป',
+    desc: 'ให้ Copilot ทำหน้าที่เป็น executive assistant แจ้งรายละเอียดประชุมถัดไปทันที',
+    prompt: `I'd like for you to act as my executive assistant. Can you tell me when my next meeting is, who will be attending, and what time the meeting is about? Please output in the following format: Meeting Title: Meeting Date/Time: Meeting Attendees: Meeting Topic(s)`,
+    output: `**Meeting Title:** Product Strategy Workshop
+
+**Meeting Date/Time:** วันนี้ 15:30 น. (อีก 45 นาที)
+
+**Meeting Attendees:**
+- คุณ Reid (Director of Product)
+- ทีม PM ทั้งหมด (5 คน)
+- Design Lead
+
+**Meeting Topic(s):**
+- ทบทวน Roadmap H2
+- อนุมัติ Feature Priority
+- Resource Allocation Q4`,
+    tags: ['Teams', 'ประชุม', 'เตรียมตัว', 'Calendar'],
+    difficulty: 1,
+    useCase: 'ก่อนประชุม, เช็คว่าประชุมอะไรต่อไป, เตรียมตัวด่วน',
+    sourceUrl: 'https://github.com/pnp/copilot-prompts'
+  },
+  {
+    id: 'tm003',
+    category: 'teams',
+    source: 'official',
+    title: 'Dashboard 5 งานสำคัญวันนี้',
+    desc: 'สร้างรายงานสรุป 5 งานหลักของวัน พร้อมสถานะ, อุปสรรค และ deadline ที่ใกล้มา',
+    prompt: `Build a dashboard summarizing the top 5 tasks of the day, their status, and any blockers preventing completion. Include upcoming deadlines for the week.`,
+    output: `**🎯 Dashboard วันนี้ — ${new Date().toLocaleDateString('th-TH')}**
+
+| งาน | สถานะ | อุปสรรค |
+|---|---|---|
+| ส่ง Report Q3 | 🟡 กำลังทำ | รอข้อมูลจากการเงิน |
+| Review PR #42 | 🔴 ค้างอยู่ | — |
+| Client Proposal | 🟢 เสร็จแล้ว | — |
+| Team 1-on-1 | ⏰ วันนี้ 14:00 | — |
+| Sprint Planning | ⏰ พรุ่งนี้ | ต้องเตรียม backlog |
+
+**Deadlines สัปดาห์นี้:**
+- ศ. — ส่ง Invoice รายเดือน
+- ศ. — อัปเดต OKR`,
+    tags: ['Teams', 'Dashboard', 'งาน', 'ผลิตภาพ'],
+    difficulty: 1,
+    useCase: 'เริ่มต้นวัน, Daily standup, วางแผนงานประจำวัน',
+    sourceUrl: 'https://github.com/pnp/copilot-prompts'
+  },
+
+  // ===== M365 COPILOT CHAT — จาก Microsoft PnP Official =====
+  {
+    id: 'mc001',
+    category: 'm365',
+    source: 'official',
+    title: 'วิเคราะห์การใช้เวลาในสัปดาห์นี้',
+    desc: 'ให้ Copilot วิเคราะห์ calendar แล้วจัดหมวดหมู่ว่าเวลาถูกใช้ไปกับอะไรบ้าง',
+    prompt: `Look at my events in my calendar for this week and create categories that describe how I'm using my time. Give me a brief description for each category and estimate the percentage of time I spend in each category.`,
+    output: `**การวิเคราะห์การใช้เวลาสัปดาห์นี้:**
+
+| หมวดหมู่ | เวลา (ชม.) | % | คำอธิบาย |
+|---|---|---|---|
+| 🤝 ประชุมกับลูกค้า | 6.5 | 38% | Demo, Follow-up, Negotiation |
+| 👥 Internal Meeting | 5 | 29% | Standup, Planning, Review |
+| 💻 Deep Work | 4 | 24% | เขียนรายงาน, วิเคราะห์ข้อมูล |
+| 📧 Email & Admin | 1.5 | 9% | ตอบอีเมล, จัดการเอกสาร |
+
+**💡 Insight:** ใช้เวลากับ Meeting มาก 67% ลองบล็อก Focus Time สัก 2 ชม./วัน`,
+    tags: ['Calendar', 'Time Management', 'วิเคราะห์', 'ผลิตภาพ'],
+    difficulty: 1,
+    useCase: 'ทบทวนการใช้เวลา, Work-life balance, เพิ่มประสิทธิภาพ',
+    sourceUrl: 'https://github.com/pnp/copilot-prompts'
+  },
+  {
+    id: 'mc002',
+    category: 'm365',
+    source: 'official',
+    title: 'กำหนด Action Items ประจำวัน',
+    desc: 'ให้ Copilot ทำหน้าที่ personal assistant สรุปทุก message และ email เป็น action list จัดลำดับความสำคัญ',
+    prompt: `You are a skilled personal assistant tasked to optimize my work. Your tasks include summarizing unread Teams messages and Outlook emails into a bulleted list with brief description which consists of Title of discussion, little context and ask from me, sorted by priority from high to low. You determine the priority by analyzing my work patterns and collaborations over the past [number of days] days. Use your expertise to outline the most effective course of actions for my day.`,
+    output: `**🎯 Action Plan วันนี้ (จัดเรียงตามความสำคัญ)**
+
+🔴 **HIGH — ตอบ ASAP**
+• **Budget Approval** — CFO รอการอนุมัติงบประมาณ Q4 ภายใน 12:00 น.
+• **Client Escalation** — ลูกค้า ABC ร้องเรียนเรื่องระบบ ต้องการ update
+
+🟡 **MEDIUM — ทำวันนี้**
+• **PR Review** — ทีม Dev รอ review code ก่อน deploy วันพรุ่งนี้
+• **Weekly Report** — ส่งให้ Manager ก่อน 17:00 น.
+
+🟢 **LOW — เมื่อมีเวลา**
+• **Newsletter** — อ่านเพิ่มเติมเกี่ยวกับ AI Updates`,
+    tags: ['M365', 'Action Items', 'Personal Assistant', 'ผลิตภาพ'],
+    difficulty: 1,
+    useCase: 'เช้าวันทำงาน, กลับจากลาพัก, จัดการงาน backlog',
+    sourceUrl: 'https://github.com/pnp/copilot-prompts'
+  },
+  {
+    id: 'mc003',
+    category: 'm365',
+    source: 'official',
+    title: 'เรียนรู้วิธีใช้งานเครื่องมือใหม่',
+    desc: 'ให้ Copilot สร้างคู่มือเรียนรู้ครบวงจรสำหรับเครื่องมือ/ระบบใหม่ที่ต้องใช้งาน',
+    prompt: `I want to learn more about how to implement [tool, service]. Provide a high-level outline with guidance on how to implement, best practice set ups, how to get leader buy-in, etc.`,
+    output: `**คู่มือเรียนรู้: Microsoft Power BI**
+
+**ภาพรวมและประโยชน์:**
+Power BI ช่วยแปลงข้อมูลดิบเป็น Dashboard แบบ Interactive ทำให้ตัดสินใจบนข้อมูลจริง
+
+**ขั้นตอนการ Implement:**
+1. ติดตั้ง Power BI Desktop (ฟรี)
+2. เชื่อมต่อ Data Source (Excel, SQL, SharePoint)
+3. สร้าง Data Model และ Relationships
+4. ออกแบบ Dashboard และ Visualizations
+5. Publish ขึ้น Power BI Service
+
+**Best Practices:**
+- ใช้ Star Schema สำหรับ Data Model
+- สร้าง Naming Convention ก่อนเริ่ม
+
+**วิธี Get Leader Buy-in:**
+เน้น ROI: ลดเวลาทำรายงาน 80%, ข้อมูล Real-time`,
+    tags: ['M365', 'เรียนรู้', 'IT', 'Implementation'],
+    difficulty: 1,
+    useCase: 'เรียนรู้เครื่องมือใหม่, Onboarding, IT Training',
+    sourceUrl: 'https://adoption.microsoft.com/en-us/scenario-library/information-technology/'
+  },
+  {
+    id: 'mc004',
+    category: 'm365',
+    source: 'official',
+    title: 'เขียนเอกสาร Architecture ภาษาไม่เทคนิค',
+    desc: 'แปลงข้อมูลระบบซับซ้อนเป็นเอกสาร 2 หน้าที่ผู้บริหารเข้าใจได้ ไม่ต้องมีพื้นฐาน IT',
+    prompt: `Create a 2-page document detailing the architecture of [system] in non-technical language. Be sure to incorporate key features, technologies, and a process diagram.`,
+    output: `**เอกสาร: สถาปัตยกรรมระบบ CRM ของเรา**
+
+**หน้า 1 — ภาพรวมระบบ**
+ระบบ CRM ของเราทำงานบน Cloud ช่วยให้ทีมขายติดตามลูกค้าได้แบบ Real-time จากทุกที่
+
+🔄 **กระบวนการทำงาน:**
+ลูกค้าติดต่อ → ระบบบันทึกอัตโนมัติ → แจ้งเตือนทีมขาย → ติดตาม → ปิดดีล
+
+**หน้า 2 — ฟีเจอร์หลัก**
+✅ บันทึกข้อมูลลูกค้าครบวงจร
+✅ วิเคราะห์โอกาสขาย (AI-powered)
+✅ Dashboard real-time สำหรับผู้บริหาร
+✅ เชื่อมต่อ Outlook และ Teams โดยอัตโนมัติ`,
+    tags: ['M365', 'เอกสาร', 'Architecture', 'IT'],
+    difficulty: 2,
+    useCase: 'นำเสนอผู้บริหาร, เอกสารระบบ, IT Communication',
+    sourceUrl: 'https://adoption.microsoft.com/en-us/scenario-library/information-technology/'
+  },
+  {
+    id: 'mc005',
+    category: 'm365',
+    source: 'official',
+    title: 'สร้าง Outline อบรมพนักงานใหม่',
+    desc: 'ออกแบบหลักสูตรอบรม 30 นาทีสำหรับระบบ/เครื่องมือใหม่ พร้อม key concepts และ demo',
+    prompt: `I am training new users on our [software, system, tool]. Create an outline for a 30-minute training including key concepts, demos, and best practices.`,
+    output: `**Outline อบรม: Microsoft Teams (30 นาที)**
+
+**[0-5 นาที] Introduction**
+- Teams คืออะไร ทำไมถึงใช้
+- ประโยชน์หลัก 3 ข้อ
+
+**[5-15 นาที] Demo หลัก**
+- สร้าง Channel และโพสต์ข้อความ (3 นาที)
+- จัดประชุม Video Call (3 นาที)
+- แชร์ไฟล์และ Co-edit (4 นาที)
+
+**[15-25 นาที] Hands-on Practice**
+- ผู้เข้าอบรมทดลองใช้งานจริง
+- วิทยากรตอบคำถาม
+
+**[25-30 นาที] Best Practices & Q&A**
+- 5 เคล็ดลับใช้ Teams ให้มีประสิทธิภาพ
+- ถามตอบ`,
+    tags: ['Training', 'Onboarding', 'M365', 'HR'],
+    difficulty: 1,
+    useCase: 'อบรมพนักงานใหม่, Change Management, System Rollout',
+    sourceUrl: 'https://adoption.microsoft.com/en-us/scenario-library/information-technology/'
+  },
+  {
+    id: 'mc006',
+    category: 'm365',
+    source: 'official',
+    title: 'แก้ไขโค้ดและเพิ่ม Error Handling',
+    desc: 'ให้ Copilot แก้ไข bug ในโค้ด พร้อมเพิ่ม comment และอธิบายการทำงาน',
+    prompt: `Rewrite this code so that it will no longer have an error when the user picks an invalid product type. Also add comments and provide a summary of what it does: [code]`,
+    output: `**สรุปสิ่งที่ Code นี้ทำ:**
+ฟังก์ชัน \`getProductPrice()\` คืนค่าราคาสินค้าตาม type ที่รับมา
+
+**การแก้ไข:**
+\`\`\`python
+def get_product_price(product_type: str) -> float:
+    """คืนค่าราคาสินค้าตาม type — returns 0.0 หาก type ไม่ถูกต้อง"""
+    prices = {
+        "standard": 100.0,
+        "premium": 250.0,
+        "enterprise": 500.0
+    }
+    # ป้องกัน KeyError เมื่อ type ไม่อยู่ใน dict
+    return prices.get(product_type.lower(), 0.0)
+\`\`\`
+
+**สิ่งที่เปลี่ยน:** ใช้ \`.get()\` แทน \`[]\` เพื่อป้องกัน KeyError`,
+    tags: ['Coding', 'Bug Fix', 'Python', 'M365'],
+    difficulty: 2,
+    useCase: 'Debug code, Code Review, IT Development',
+    sourceUrl: 'https://adoption.microsoft.com/en-us/scenario-library/information-technology/'
+  },
 
   // ===== WRITING =====
   {
