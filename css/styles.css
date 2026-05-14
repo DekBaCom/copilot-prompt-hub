@@ -1077,6 +1077,168 @@ h1, h2, h3, h4, h5 {
 .footer-contributor a:hover { opacity: 0.7; }
 
 /* ============================
+   COMPARE PLANS SECTION
+   ============================ */
+.compare-section {
+  padding: 80px 0;
+  background: var(--bg-secondary);
+}
+
+.compare-tabs {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.compare-tab {
+  padding: 10px 22px;
+  border-radius: 50px;
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.compare-tab:hover { border-color: var(--accent); color: var(--accent); }
+.compare-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.compare-table-wrap {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.compare-table thead th {
+  padding: 0;
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--border);
+  vertical-align: top;
+}
+
+.compare-table .feat-col {
+  width: 38%;
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.plan-hd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 20px;
+  gap: 4px;
+  position: relative;
+}
+
+.plan-hd.popular { background: rgba(0,120,212,0.06); }
+
+.popular-badge {
+  position: absolute;
+  top: -1px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 0 0 8px 8px;
+  letter-spacing: 0.05em;
+}
+
+.plan-icon-big { font-size: 1.8rem; margin-bottom: 4px; }
+.plan-name { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); }
+.plan-price { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; }
+.plan-link {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.plan-link:hover { text-decoration: underline; }
+
+.compare-table tbody tr { transition: background 0.15s; }
+.compare-table tbody tr:hover { background: var(--bg-hover); }
+
+.compare-table tbody td {
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.feat-group td {
+  background: var(--bg-secondary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-table .v {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.compare-table .v.yes { color: #22c55e; }
+.compare-table .v.no { color: var(--text-muted); opacity: 0.4; }
+.compare-table .v.partial { color: #f59e0b; }
+
+/* highlight column when tab is active */
+.compare-table .plan-col { transition: background 0.2s; }
+.compare-table.focus-free .plan-paid,
+.compare-table.focus-free .plan-studio { opacity: 0.35; }
+.compare-table.focus-paid .plan-free,
+.compare-table.focus-paid .plan-studio { opacity: 0.35; }
+.compare-table.focus-studio .plan-free,
+.compare-table.focus-studio .plan-paid { opacity: 0.35; }
+
+.compare-table td[data-plan],
+.compare-table th[data-plan] { transition: opacity 0.2s; }
+.compare-table.focus-free td[data-plan="paid"],
+.compare-table.focus-free td[data-plan="studio"],
+.compare-table.focus-free th[data-plan="paid"],
+.compare-table.focus-free th[data-plan="studio"] { opacity: 0.3; }
+.compare-table.focus-paid td[data-plan="free"],
+.compare-table.focus-paid td[data-plan="studio"],
+.compare-table.focus-paid th[data-plan="free"],
+.compare-table.focus-paid th[data-plan="studio"] { opacity: 0.3; }
+.compare-table.focus-studio td[data-plan="free"],
+.compare-table.focus-studio td[data-plan="paid"],
+.compare-table.focus-studio th[data-plan="free"],
+.compare-table.focus-studio th[data-plan="paid"] { opacity: 0.3; }
+
+.compare-note {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+
+/* ============================
    MODAL
    ============================ */
 .modal-overlay {

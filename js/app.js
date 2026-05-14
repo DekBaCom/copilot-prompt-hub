@@ -581,3 +581,24 @@
   }
 
 })();
+
+// ============================================================
+// Compare Plans Tab Logic
+// ============================================================
+(function () {
+  'use strict';
+  const tabs = document.querySelectorAll('.compare-tab');
+  const table = document.getElementById('compareTable');
+  if (!tabs.length || !table) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      const plan = tab.dataset.plan;
+      table.classList.remove('focus-free', 'focus-paid', 'focus-studio');
+      if (plan !== 'all') table.classList.add('focus-' + plan);
+    });
+  });
+})();

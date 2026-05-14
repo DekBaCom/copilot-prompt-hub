@@ -38,6 +38,7 @@
         <a href="#prompts" class="nav-link">คลัง Prompt</a>
         <a href="#agents" class="nav-link">Agent Instructions</a>
         <a href="#tips" class="nav-link">เคล็ดลับ</a>
+        <a href="#compare" class="nav-link">เปรียบเทียบแผน</a>
         <a href="https://github.com/DekBaCom/copilot-prompt-hub" target="_blank" rel="noopener" class="nav-link nav-github" aria-label="GitHub">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.579.688.481C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
           GitHub
@@ -55,6 +56,7 @@
     <a href="#prompts" class="mobile-nav-link">คลัง Prompt</a>
     <a href="#agents" class="mobile-nav-link">Agent Instructions</a>
     <a href="#tips" class="mobile-nav-link">เคล็ดลับ</a>
+    <a href="#compare" class="mobile-nav-link">เปรียบเทียบแผน</a>
     <a href="https://github.com/DekBaCom/copilot-prompt-hub" target="_blank" rel="noopener" class="mobile-nav-link">GitHub</a>
   </div>
 
@@ -290,6 +292,215 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ========== COMPARE PLANS ========== -->
+    <section class="compare-section" id="compare" aria-label="เปรียบเทียบแผน Copilot">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">เปรียบเทียบแผน Microsoft Copilot</h2>
+          <p class="section-subtitle">เลือกแผนที่เหมาะกับการใช้งาน — ข้อมูลจาก <a href="https://www.microsoft.com/en-us/microsoft-365-copilot/pricing" target="_blank" rel="noopener">microsoft.com</a> (พฤษภาคม 2026)</p>
+        </div>
+
+        <div class="compare-tabs" role="tablist" aria-label="เลือกแผน Copilot">
+          <button class="compare-tab active" role="tab" aria-selected="true" data-plan="all">ทั้งหมด</button>
+          <button class="compare-tab" role="tab" aria-selected="false" data-plan="free">🆓 Copilot Free</button>
+          <button class="compare-tab" role="tab" aria-selected="false" data-plan="paid">⭐ M365 Copilot</button>
+          <button class="compare-tab" role="tab" aria-selected="false" data-plan="studio">🤖 Copilot Studio</button>
+        </div>
+
+        <div class="compare-table-wrap">
+          <table class="compare-table" id="compareTable">
+            <thead>
+              <tr>
+                <th class="feat-col">ฟีเจอร์</th>
+                <th class="plan-col plan-free" data-plan="free">
+                  <div class="plan-hd">
+                    <span class="plan-icon-big">🆓</span>
+                    <span class="plan-name">Copilot Free</span>
+                    <span class="plan-price">ไม่มีค่าใช้จ่าย</span>
+                    <a href="https://copilot.microsoft.com" target="_blank" rel="noopener" class="plan-link">เริ่มใช้งาน →</a>
+                  </div>
+                </th>
+                <th class="plan-col plan-paid" data-plan="paid">
+                  <div class="plan-hd popular">
+                    <span class="popular-badge">แนะนำ</span>
+                    <span class="plan-icon-big">⭐</span>
+                    <span class="plan-name">M365 Copilot</span>
+                    <span class="plan-price">$30/user/เดือน</span>
+                    <a href="https://www.microsoft.com/en-us/microsoft-365-copilot/pricing" target="_blank" rel="noopener" class="plan-link">ดูรายละเอียด →</a>
+                  </div>
+                </th>
+                <th class="plan-col plan-studio" data-plan="studio">
+                  <div class="plan-hd">
+                    <span class="plan-icon-big">🤖</span>
+                    <span class="plan-name">Copilot Studio</span>
+                    <span class="plan-price">$200/25k credits/เดือน</span>
+                    <a href="https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/copilot-studio" target="_blank" rel="noopener" class="plan-link">ดูรายละเอียด →</a>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="feat-group"><td colspan="4">💬 AI Chat</td></tr>
+              <tr>
+                <td>AI Chat ทั่วไป (Web-grounded)</td>
+                <td class="v yes" data-plan="free">✓</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>Work IQ — ค้นหาจากข้อมูลองค์กร</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>ค้นหาอีเมล, ไฟล์, แชท, ปฏิทิน</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>สร้างภาพด้วย AI (15 boosts/วัน)</td>
+                <td class="v yes" data-plan="free">✓</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v no" data-plan="studio">—</td>
+              </tr>
+
+              <tr class="feat-group"><td colspan="4">📱 Microsoft 365 Apps</td></tr>
+              <tr>
+                <td>Copilot ใน Word &amp; PowerPoint</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v no" data-plan="studio">—</td>
+              </tr>
+              <tr>
+                <td>Copilot ใน Excel (Data Analysis)</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v no" data-plan="studio">—</td>
+              </tr>
+              <tr>
+                <td>Copilot ใน Outlook (Email Draft &amp; Summary)</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v no" data-plan="studio">—</td>
+              </tr>
+              <tr>
+                <td>Copilot ใน Teams (Meeting Summary)</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v no" data-plan="studio">—</td>
+              </tr>
+              <tr>
+                <td>Copilot ใน OneNote &amp; Loop</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v no" data-plan="studio">—</td>
+              </tr>
+
+              <tr class="feat-group"><td colspan="4">🤖 Agents</td></tr>
+              <tr>
+                <td>Agent สำเร็จรูป (Researcher, Analyst, Tasks)</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>สร้าง Agent ภายในองค์กร (Internal)</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓ รวมอยู่แล้ว</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>สร้าง Agent เผยแพร่ภายนอก (External/Website)</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v no" data-plan="paid">—</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>Multi-agent Architecture</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v no" data-plan="paid">—</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>IVR / Voice Agent Design</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v no" data-plan="paid">—</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+
+              <tr class="feat-group"><td colspan="4">🛠️ เครื่องมือสร้างและจัดการ Agent</td></tr>
+              <tr>
+                <td>No-code / Visual Agent Builder</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v partial" data-plan="paid">บางส่วน</td>
+                <td class="v yes" data-plan="studio">✓ เต็มรูปแบบ</td>
+              </tr>
+              <tr>
+                <td>Power Platform Connectors (Standard &amp; Premium)</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v no" data-plan="paid">—</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>Azure AI Search &amp; Microsoft Foundry</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v no" data-plan="paid">—</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>Co-authoring &amp; Version Control</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v no" data-plan="paid">—</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>Dataverse Storage</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v no" data-plan="paid">—</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>GPT-5.5 Reasoning (Early Access)</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+
+              <tr class="feat-group"><td colspan="4">🔒 ความปลอดภัยและการจัดการองค์กร</td></tr>
+              <tr>
+                <td>Enterprise Data Protection</td>
+                <td class="v yes" data-plan="free">✓</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>IT Admin Controls &amp; Compliance</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>Usage Analytics &amp; Adoption Metrics</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v yes" data-plan="paid">✓</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+              <tr>
+                <td>Microsoft Purview (ROI &amp; Compliance Tracking)</td>
+                <td class="v no" data-plan="free">—</td>
+                <td class="v no" data-plan="paid">—</td>
+                <td class="v yes" data-plan="studio">✓</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="compare-note">* ราคาและฟีเจอร์อาจเปลี่ยนแปลงได้ตาม Microsoft · M365 Copilot Business เริ่มต้นที่ $18/user/เดือน (ถึงมิถุนายน 2026) · Copilot Studio รวมอยู่ใน M365 Copilot สำหรับ Agent ภายในองค์กร</p>
       </div>
     </section>
 
