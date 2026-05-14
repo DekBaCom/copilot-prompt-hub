@@ -1072,6 +1072,9 @@ h1, h2, h3, h4, h5 {
   gap: 4px;
 }
 .footer-disclaimer { opacity: 0.6; }
+.footer-contributor { opacity: 0.8; font-size: 0.85rem; margin-top: 4px; }
+.footer-contributor a { color: inherit; text-decoration: underline; }
+.footer-contributor a:hover { opacity: 0.7; }
 
 /* ============================
    MODAL
