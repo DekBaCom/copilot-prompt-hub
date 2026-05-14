@@ -2891,6 +2891,403 @@ Top 3 Ideas ที่จะทดลองก่อน พร้อม Owner แ
     difficulty: 2,
     useCase: 'Cross-functional Project, Collaboration, Team Alignment'
   },
+  {
+    id: 'cw006',
+    category: 'cowork',
+    source: 'original',
+    title: 'สร้าง Microsoft Loop Page สำหรับทีม',
+    desc: 'ใช้ Copilot ช่วยสร้าง Loop Workspace พร้อม Template เนื้อหา และ Components สำหรับโปรเจคทีม',
+    prompt: `ช่วยสร้าง Microsoft Loop Page สำหรับโปรเจค: [ชื่อโปรเจค]
+
+วัตถุประสงค์ของ Page: [เช่น Project Kickoff / Sprint Planning / Team Wiki]
+สมาชิกทีม: [รายชื่อหรือจำนวน]
+ระยะเวลา: [วันเริ่ม - วันสิ้นสุด]
+
+สร้าง Loop Page ที่ประกอบด้วย:
+1. **Header Section**: ชื่อโปรเจค เป้าหมาย และ Key Metrics
+2. **Team Roster Table**: ชื่อ บทบาท ช่องทางติดต่อ และ Timezone
+3. **Project Timeline**: Milestone สำคัญพร้อมวันที่
+4. **Decision Log**: ตารางบันทึกการตัดสินใจสำคัญ
+5. **Open Questions**: รายการคำถามที่ยังรอคำตอบ
+6. **Resources & Links**: ลิงก์เอกสาร SharePoint, Teams Channel, Planner Board`,
+    output: `**Microsoft Loop Page: Project Aurora 🚀**
+
+---
+### 🎯 Project Overview
+**เป้าหมาย:** เปิดตัว Mobile App ภายใน Q3 2025
+**KPI:** 10,000 Downloads ภายใน 30 วัน | Rating ≥ 4.5 Stars
+
+---
+### 👥 Team Roster
+| ชื่อ | บทบาท | ติดต่อ | Timezone |
+|---|---|---|---|
+| นายก สมใจ | Project Manager | @somjai | GMT+7 |
+| วิมล รักดี | Lead Developer | @wimon | GMT+7 |
+| ปิยะ แสงทอง | UX Designer | @piya | GMT+7 |
+| Sarah Johnson | QA Lead | @sarah.j | GMT+0 |
+
+---
+### 📅 Timeline
+- **15 มิ.ย.** — Kickoff & Requirements Lock ✅
+- **30 มิ.ย.** — Design Prototype Complete 🔄
+- **31 ก.ค.** — Beta Release (Internal)
+- **15 ส.ค.** — UAT Sign-off
+- **1 ก.ย.** — 🚀 Public Launch
+
+---
+### 📋 Decision Log
+| วันที่ | การตัดสินใจ | เหตุผล | ผู้อนุมัติ |
+|---|---|---|---|
+| 14 มิ.ย. | ใช้ React Native | Cross-platform ประหยัดเวลา | สมใจ |
+
+---
+### ❓ Open Questions
+- [ ] App Store กับ Play Store จะ Submit พร้อมกันหรือไม่?
+- [ ] Push Notification Policy ต้องขอ Legal Approval หรือเปล่า?
+
+---
+### 🔗 Resources
+📁 SharePoint: /Project-Aurora/Documents
+💬 Teams: #project-aurora-team
+✅ Planner: Aurora Sprint Board`,
+    tags: ['Loop', 'Workspace', 'Project Page', 'Collaboration', 'M365'],
+    difficulty: 1,
+    useCase: 'Project Kickoff, Team Wiki, Sprint Planning, Knowledge Hub'
+  },
+  {
+    id: 'cw007',
+    category: 'cowork',
+    source: 'original',
+    title: 'วางแผน Sprint ด้วย Microsoft Planner + Copilot',
+    desc: 'ใช้ Copilot ช่วยสร้าง Sprint Plan จัดสรรงานให้ทีม และสร้าง Definition of Done อย่างมืออาชีพ',
+    prompt: `ช่วยสร้าง Sprint Plan สำหรับ Microsoft Planner
+
+Sprint ที่: [หมายเลข Sprint]
+ช่วงเวลา: [วันที่เริ่ม - วันที่สิ้นสุด]
+Capacity ทีม: [จำนวน Story Points หรือชั่วโมงรวม]
+
+Backlog Items ที่จะนำมา Sprint (วาง User Stories ที่นี่):
+[US-001]: [รายละเอียด]
+[US-002]: [รายละเอียด]
+
+สร้าง:
+1. **Sprint Goal**: ประโยคเดียวที่บอกเป้าหมาย Sprint นี้
+2. **Task Breakdown**: แตก User Story เป็น Tasks ย่อย
+3. **Assignment**: จัดสรรงานตามทักษะและ Capacity
+4. **Definition of Done**: เกณฑ์ที่ถือว่างานเสร็จ
+5. **Risk & Dependencies**: ความเสี่ยงและ Dependency ที่ต้องระวัง`,
+    output: `**Sprint 12 Plan (17 - 30 มิ.ย. 2025)**
+
+---
+### 🎯 Sprint Goal
+"Deliver working user authentication with social login so users can onboard in under 2 minutes"
+
+---
+### 📋 Task Breakdown
+
+**US-045: Social Login (Facebook/Google)**
+| Task | Owner | Estimate | Status |
+|---|---|---|---|
+| OAuth2 Backend Integration | วิมล | 8h | 📌 Todo |
+| Frontend Login UI | ปิยะ | 4h | 📌 Todo |
+| Unit Tests (coverage ≥ 80%) | Sarah | 3h | 📌 Todo |
+| Security Review | วิมล | 2h | 📌 Todo |
+
+**US-046: Profile Setup Flow**
+| Task | Owner | Estimate | Status |
+|---|---|---|---|
+| Profile Form Component | ปิยะ | 6h | 📌 Todo |
+| Avatar Upload (Azure Blob) | วิมล | 5h | 📌 Todo |
+
+---
+### ✅ Definition of Done
+- [ ] Code reviewed โดยสมาชิกอีก 1 คน
+- [ ] Unit Tests ผ่านและ Coverage ≥ 80%
+- [ ] Deployed บน Staging Environment
+- [ ] QA Sign-off จาก Sarah
+- [ ] Documentation อัปเดตใน SharePoint
+
+---
+### ⚠️ Risk & Dependencies
+- **Dependency:** Azure AD App Registration ต้องเสร็จก่อน (IT Team, ETA: 18 มิ.ย.)
+- **Risk:** Sarah ลาวันที่ 25-26 มิ.ย. — ต้องนัด QA ก่อนวันที่ 24`,
+    tags: ['Planner', 'Sprint', 'Agile', 'Task Management', 'M365'],
+    difficulty: 2,
+    useCase: 'Agile Sprint Planning, Task Allocation, Project Management'
+  },
+  {
+    id: 'cw008',
+    category: 'cowork',
+    source: 'original',
+    title: 'จดบันทึกและ Action Items แบบ Real-time ใน Teams Meeting',
+    desc: 'ใช้ Copilot ใน Teams Meeting ช่วยจดบันทึก สรุป Discussion และสร้าง Action Items ระหว่างประชุม',
+    prompt: `[ใช้ระหว่าง Teams Meeting] ช่วยจดบันทึกประชุมและสรุป Action Items
+
+ประชุม: [ชื่อการประชุม]
+วันที่: [วันที่]
+ผู้เข้าร่วม: [รายชื่อ]
+วาระหลัก: [หัวข้อที่จะพูดถึง]
+
+ขณะประชุม ช่วย:
+1. **จดบันทึก** Key Points จากแต่ละหัวข้อ
+2. **ไฮไลต์** การตัดสินใจที่เกิดขึ้น
+3. **จับ Action Items** พร้อม Owner และ Due Date
+4. **Flag** หัวข้อที่ยังไม่มีข้อสรุป (Parking Lot)
+
+หลังประชุม สร้าง:
+- Meeting Summary (ส่ง Email)
+- Action Items List (สร้างใน Planner)
+- Follow-up Agenda สำหรับครั้งถัดไป`,
+    output: `**Meeting Notes: Q3 Budget Review**
+📅 17 มิ.ย. 2025 | 10:00-11:00 น. | Teams
+
+**ผู้เข้าร่วม:** สมชาย (Finance), วิมล (IT), ปิยะ (Marketing), Sarah (Product)
+
+---
+### 📝 Key Points
+
+**วาระ 1: IT Infrastructure Budget**
+- ขอเพิ่มงบ Azure 300,000 บาท สำหรับ Scaling รองรับ Product Launch
+- Finance ขอ Cost Breakdown เพิ่มเติมก่อนอนุมัติ
+- ✅ **ตัดสินใจ:** Approve งบชั่วคราว 150,000 บาท รอเอกสารเพิ่มเติมก่อน
+
+**วาระ 2: Marketing Campaign Q3**
+- Campaign ใช้งบ 500,000 บาท ครอบคลุม Social + Influencer + Events
+- ✅ **ตัดสินใจ:** อนุมัติเต็มจำนวน เริ่ม 1 ก.ค.
+
+---
+### ✅ Action Items
+| งาน | Owner | Due Date |
+|---|---|---|
+| ส่ง Azure Cost Breakdown | วิมล | 20 มิ.ย. |
+| จัดทำ Campaign Brief | ปิยะ | 22 มิ.ย. |
+| ทำ Purchase Order Azure | สมชาย | 25 มิ.ย. |
+
+---
+### 🅿️ Parking Lot (ยังไม่มีข้อสรุป)
+- HR Budget สำหรับ Q4 Hiring — ย้ายไปประชุม 1 ก.ค.
+
+---
+### 📅 Next Meeting
+1 ก.ค. 2025 | 10:00 น. | วาระ: Q4 Planning + HR Budget Review`,
+    tags: ['Teams Meeting', 'Meeting Notes', 'Action Items', 'Copilot', 'M365'],
+    difficulty: 1,
+    useCase: 'Meeting Facilitation, Action Tracking, Team Alignment'
+  },
+  {
+    id: 'cw009',
+    category: 'cowork',
+    source: 'original',
+    title: 'สร้าง Knowledge Base ใน SharePoint ด้วย Copilot',
+    desc: 'ใช้ Copilot ช่วยออกแบบโครงสร้าง SharePoint Site, สร้าง Navigation และเขียน Content สำหรับ Team Knowledge Base',
+    prompt: `ช่วยออกแบบและสร้าง Knowledge Base ใน SharePoint สำหรับ: [ทีม/แผนก/โปรเจค]
+
+ข้อมูลพื้นฐาน:
+- ทีม: [ชื่อทีม จำนวนคน]
+- ประเภทข้อมูลที่จัดเก็บ: [Policies / SOPs / How-to / FAQ / Project Docs]
+- ผู้ใช้หลัก: [ใครจะใช้ และบ่อยแค่ไหน]
+- ความต้องการพิเศษ: [Search ง่าย / Permission ต่างระดับ / Multilingual]
+
+สร้าง:
+1. **Site Structure**: โครงสร้าง Pages และ Libraries
+2. **Navigation Design**: เมนูและ Quick Links
+3. **Content Templates**: Template สำหรับแต่ละประเภทเอกสาร
+4. **Metadata Taxonomy**: Tags และ Categories สำหรับค้นหา
+5. **Governance Rules**: ใครเพิ่ม/แก้ไข/Archive ได้บ้าง
+6. **Launch Communication**: ข้อความประกาศให้ทีมรู้จัก`,
+    output: `**SharePoint Knowledge Base Design: IT Department**
+
+---
+### 🏗️ Site Structure
+\`\`\`
+IT Knowledge Hub (Home)
+├── 📋 Policies & Standards
+│   ├── Security Policies
+│   ├── IT Governance
+│   └── Compliance Docs
+├── 📖 How-To Guides
+│   ├── Software Setup
+│   ├── Troubleshooting
+│   └── New Employee IT Checklist
+├── 🔧 SOPs (Standard Operating Procedures)
+│   ├── Incident Response
+│   ├── Change Management
+│   └── Backup & Recovery
+├── ❓ FAQ
+└── 🗂️ Project Archives
+\`\`\`
+
+---
+### 🧭 Navigation
+**Top Links:** Home | Search All | Submit New Doc | IT Helpdesk
+**Quick Links:** VPN Guide | Password Reset | Software Request Form
+
+---
+### 📄 Content Template: How-To Guide
+\`\`\`
+Title: [ชื่อเรื่อง]
+Last Updated: [วันที่] | Owner: [ชื่อ] | Version: [X.X]
+Difficulty: Beginner / Intermediate / Advanced
+Estimated Time: XX minutes
+
+## Overview (สิ่งที่จะทำได้หลังอ่าน)
+## Prerequisites (สิ่งที่ต้องมีก่อน)
+## Step-by-Step Instructions
+## Troubleshooting
+## Related Articles
+\`\`\`
+
+---
+### 🏷️ Metadata Tags
+**Category:** Policy | SOP | Guide | FAQ | Template
+**App:** Azure | M365 | Network | Security | Hardware
+**Audience:** All Staff | IT Team | Manager | New Employee
+
+---
+### 🔐 Governance
+- **Contribute:** IT Team Members (เพิ่ม/แก้ไข)
+- **Review:** IT Manager (Approve ก่อน Publish)
+- **Read:** All Company Staff
+- **Archive:** เอกสาร >2 ปี ย้ายไป Archives อัตโนมัติ
+
+---
+### 📢 Launch Message (Teams/Email)
+"🎉 ขอแนะนำ IT Knowledge Hub! ศูนย์รวมคู่มือ วิธีใช้งาน และ Policy ทั้งหมดในที่เดียว เข้าถึงได้ที่ [Link] ลองค้นหาคำว่า 'VPN' หรือ 'New Employee' ดูได้เลย"`,
+    tags: ['SharePoint', 'Knowledge Base', 'Documentation', 'Information Architecture', 'M365'],
+    difficulty: 2,
+    useCase: 'Knowledge Management, Team Wiki, Onboarding Resource, Document Hub'
+  },
+  {
+    id: 'cw010',
+    category: 'cowork',
+    source: 'original',
+    title: 'เขียนโพสต์ Viva Engage เพื่อสร้าง Team Engagement',
+    desc: 'ใช้ Copilot ช่วยเขียนโพสต์ Viva Engage (Yammer) ที่ดึงดูด สร้าง Community และกระตุ้น Engagement ในองค์กร',
+    prompt: `ช่วยเขียนโพสต์ Viva Engage สำหรับ: [วัตถุประสงค์]
+
+ประเภทโพสต์ (เลือก 1):
+☐ ประกาศข่าวสาร (Announcement)
+☐ แชร์ความสำเร็จ (Win Celebration)
+☐ ขอความเห็น (Open Question / Poll)
+☐ แนะนำ Best Practice
+☐ ต้อนรับสมาชิกใหม่
+☐ สรุป Event / Training
+
+รายละเอียด:
+- Community/Group: [ชื่อ Community ที่จะโพสต์]
+- กลุ่มเป้าหมาย: [พนักงานทั่วไป / ผู้บริหาร / ทีม IT / ฯลฯ]
+- ข้อมูลหลัก: [สิ่งที่ต้องการสื่อสาร]
+- Tone: [เป็นทางการ / เป็นกันเอง / Inspiring]
+
+เพิ่มเติม:
+- Hashtags ที่เหมาะสม
+- Call-to-Action ให้คนมีส่วนร่วม
+- Emoji ที่เหมาะกับ Tone`,
+    output: `**Viva Engage Post: แชร์ความสำเร็จ Q2**
+
+---
+🏆 **ทีม Digital Transformation ทำได้แล้ว!**
+
+เมื่อสัปดาห์ที่ผ่านมา เราเพิ่งส่งมอบโปรเจค e-Procurement ได้สำเร็จ — ก่อน Deadline 2 สัปดาห์! 🎉
+
+**สิ่งที่เราทำได้:**
+✅ Automate 80% ของกระบวนการจัดซื้อ
+✅ ลดเวลา Approval จาก 7 วัน → 24 ชั่วโมง
+✅ ประหยัดงบประมาณได้กว่า 2.4 ล้านบาท/ปี
+
+ขอขอบคุณทีมงานทุกคน โดยเฉพาะ @วิมล, @ปิยะ และ @Sarah ที่ทุ่มเทจนโปรเจคนี้สำเร็จ 👏
+
+การเปลี่ยนแปลงนี้จะช่วยให้ทุกแผนกทำงานง่ายขึ้นมากครับ ลองใช้ระบบใหม่ได้เลยที่ [Link]
+
+💬 **อยากรู้ว่าทีมไหนได้ประโยชน์จาก e-Procurement บ้าง? แชร์ใน Comment ได้เลย!**
+
+#DigitalTransformation #TeamWin #M365 #Innovation #พวกเราทำได้
+
+---
+*[แนะนำ: แนบรูปภาพทีม หรือ Screenshot ระบบใหม่เพื่อเพิ่ม Engagement]*`,
+    tags: ['Viva Engage', 'Yammer', 'Internal Comms', 'Engagement', 'Community'],
+    difficulty: 1,
+    useCase: 'Internal Communication, Team Celebration, Knowledge Sharing, Employee Engagement'
+  },
+  {
+    id: 'cw011',
+    category: 'cowork',
+    source: 'original',
+    title: 'ระดมความคิดบน Microsoft Whiteboard กับ Copilot',
+    desc: 'ใช้ Copilot ช่วยเตรียม Whiteboard Session, สร้าง Template Visual และสรุปผล Ideation สำหรับทีม Remote',
+    prompt: `ช่วยวางแผนและสรุป Microsoft Whiteboard Session สำหรับ: [หัวข้อ Workshop]
+
+ข้อมูล Session:
+- วัตถุประสงค์: [สิ่งที่ต้องการได้จาก Session]
+- ผู้เข้าร่วม: [จำนวนคน บทบาท]
+- เวลา: [XX นาที]
+- Format: [Remote / Hybrid / Onsite]
+
+สร้าง:
+1. **Whiteboard Layout**: โซนต่างๆ บน Whiteboard พร้อมคำอธิบาย
+2. **Facilitation Script**: ขั้นตอน และ Timeboxing แต่ละ Activity
+3. **Sticky Note Categories**: สี และความหมายของ Sticky Note แต่ละสี
+4. **Voting Criteria**: วิธี Dot Voting หรือ Prioritization
+5. **Output Template**: รูปแบบสรุปผลหลัง Session
+
+หลัง Session วิเคราะห์ Sticky Notes และสรุป:
+- Theme หลักที่ซ้ำกัน
+- Top Ideas ที่ได้รับ Votes สูงสุด
+- Quick Wins vs Long-term Initiatives`,
+    output: `**Whiteboard Session Plan: UX Improvement Workshop**
+⏱ 90 นาที | 8 คน | Microsoft Teams + Whiteboard
+
+---
+### 🗺️ Whiteboard Layout
+\`\`\`
+┌─────────────────────────────────────────┐
+│  ZONE A: Problem Space (ซ้ายบน)         │
+│  "ปัญหาที่ผู้ใช้เจอตอนนี้คืออะไร?"     │
+├─────────────────────────────────────────┤
+│  ZONE B: Idea Generation (กลาง)         │
+│  "เราจะแก้ปัญหาเหล่านี้ยังไงได้บ้าง?" │
+├─────────────────────────────────────────┤
+│  ZONE C: Prioritization (ขวา)            │
+│  Impact vs Effort Matrix                │
+├─────────────────────────────────────────┤
+│  ZONE D: Next Steps (ล่าง)              │
+│  Top 3 Ideas + Owner + Timeline         │
+└─────────────────────────────────────────┘
+\`\`\`
+
+---
+### 📋 Facilitation Script
+| เวลา | Activity | วิธีทำ |
+|---|---|---|
+| 0-10 นาที | Check-in + Rules | แนะนำ Whiteboard, กฎ: ไม่วิจารณ์ Ideas |
+| 10-25 นาที | Problem Mapping | ทุกคนเขียน Sticky ปัญหาที่เจอ (เหลือง) |
+| 25-50 นาที | Idea Storm | เขียน Solutions (เขียว) แบบ Silent ก่อน |
+| 50-65 นาที | Cluster & Discuss | จัดกลุ่ม Ideas ที่คล้ายกัน |
+| 65-80 นาที | Dot Voting | ทุกคนได้ 5 Dots ลงคะแนน Top Ideas |
+| 80-90 นาที | Next Steps | กำหนด Owner และ Timeline |
+
+---
+### 🎨 Sticky Note Colors
+- 🟡 เหลือง = ปัญหา / Pain Points
+- 🟢 เขียว = Ideas / Solutions
+- 🔵 น้ำเงิน = คำถาม / ต้องการข้อมูลเพิ่ม
+- 🔴 แดง = ความเสี่ยง / Constraint
+
+---
+### 📊 Session Summary (หลัง Workshop)
+**Top Themes (จาก 34 Sticky Notes):**
+1. Onboarding Flow ซับซ้อนเกิน (12 Votes)
+2. Search ไม่เจอสิ่งที่ต้องการ (9 Votes)
+3. Notification มากเกินไป (7 Votes)
+
+**Top 3 Ideas:**
+🥇 Guided Onboarding Wizard (15 Dots) — Owner: ปิยะ, ETA: 3 สัปดาห์
+🥈 Smart Search Bar (11 Dots) — Owner: วิมล, ETA: 2 Sprint
+🥉 Notification Center Revamp (8 Dots) — Owner: ทีม UX, ETA: Q3`,
+    tags: ['Whiteboard', 'Workshop', 'Ideation', 'Facilitation', 'Remote Collaboration'],
+    difficulty: 2,
+    useCase: 'Design Thinking, Innovation Workshop, Remote Brainstorming, UX Research'
+  },
 ];
 
 // ===== AGENT INSTRUCTIONS =====
