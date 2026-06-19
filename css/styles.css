@@ -1257,6 +1257,161 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ============================
+   LICENSE & CREDITS SECTION
+   ============================ */
+.license-section {
+  padding: 80px 0;
+  background: var(--bg-secondary);
+}
+
+.license-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 768px) {
+  .license-grid { grid-template-columns: 1fr; }
+}
+
+.license-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.license-card--license { border-top: 4px solid #0078d4; }
+.license-card--credits { border-top: 4px solid #8764b8; }
+
+.license-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.license-icon { font-size: 2rem; flex-shrink: 0; }
+
+.license-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+.license-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(0,120,212,0.1);
+  color: #0078d4;
+}
+
+.license-badge--credits {
+  background: rgba(135,100,184,0.1);
+  color: #8764b8;
+}
+
+.license-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.license-price-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  background: rgba(0,120,212,0.06);
+  border: 1px solid rgba(0,120,212,0.18);
+  border-radius: 10px;
+  padding: 10px 18px;
+}
+
+.license-price-tag span {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0078d4;
+}
+
+.license-price-tag small {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.license-price-tag--credits {
+  background: rgba(135,100,184,0.06);
+  border-color: rgba(135,100,184,0.18);
+}
+
+.license-price-tag--credits span { color: #8764b8; }
+
+.license-services-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+}
+
+.license-services ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.license-services ul li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.license-services ul li:last-child { border-bottom: none; }
+
+.license-services ul li span { flex-shrink: 0; }
+
+.license-tip {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: rgba(255,185,0,0.07);
+  border: 1px solid rgba(255,185,0,0.28);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.license-tip-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+
+.license-tip strong {
+  display: block;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.license-tip p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ============================
    MODAL
    ============================ */
 .modal-overlay {
