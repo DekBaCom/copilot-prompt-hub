@@ -1492,6 +1492,262 @@ h1, h2, h3, h4, h5 {
   margin-top: 4px;
 }
 
+/* Explainer block */
+.cowork-explainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+/* What is Cowork */
+.cowork-what {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.cowork-ga-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16,185,129,0.1);
+  color: #10B981;
+  border: 1px solid rgba(16,185,129,0.25);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.cowork-what-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 10px;
+}
+
+.cowork-what-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  margin: 0 0 20px;
+}
+
+.cowork-strengths {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.cowork-strength-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* Task types */
+.cowork-tasks {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.cowork-sub-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+.cowork-sub-desc {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+}
+
+.cowork-task-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .cowork-task-grid { grid-template-columns: 1fr; }
+}
+
+.cowork-task-card {
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid transparent;
+}
+
+.cowork-task--light {
+  background: rgba(16,185,129,0.06);
+  border-color: rgba(16,185,129,0.2);
+}
+
+.cowork-task--medium {
+  background: rgba(245,158,11,0.06);
+  border-color: rgba(245,158,11,0.2);
+}
+
+.cowork-task--heavy {
+  background: rgba(239,68,68,0.06);
+  border-color: rgba(239,68,68,0.2);
+}
+
+.cowork-task-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.cowork-task-icon { font-size: 1.2rem; }
+
+.cowork-task-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.cowork-task-cost {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+}
+
+.cowork-task-details {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cowork-task-details li {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  padding-left: 14px;
+  position: relative;
+}
+
+.cowork-task-details li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+}
+
+.cowork-task-example {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+
+/* Pricing & Requirements */
+.cowork-pricing-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .cowork-pricing-row { grid-template-columns: 1fr; }
+}
+
+.cowork-pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cowork-price-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.cowork-price-item--highlight {
+  background: rgba(135,100,184,0.07);
+  border: 1px solid rgba(135,100,184,0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  align-items: center;
+}
+
+.cowork-price-num {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #8764b8;
+}
+
+.cowork-price-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Integrations */
+.cowork-integrations {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.cowork-plugin-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 12px;
+}
+
+.cowork-plugin {
+  display: inline-block;
+  padding: 5px 12px;
+  background: rgba(0,120,212,0.08);
+  color: #0078D4;
+  border: 1px solid rgba(0,120,212,0.18);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.cowork-coming-soon {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.cowork-prompts-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 20px;
+}
+
 /* ============================
    MODAL
    ============================ */
