@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ประเมิน Copilot Credits ที่ต้องใช้สำหรับ Task บน Microsoft 365 Copilot Cowork" />
+  <title>Credit Estimator — Copilot Prompt Hub</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* ── Page-specific styles ── */
+    .est-hero {
+      padding: 60px 0 40px;
+      text-align: center;
+    }
+    .est-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(135,100,184,0.12);
+      color: #8764b8;
+      border: 1px solid rgba(135,100,184,0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .est-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0 0 12px;
+    }
+    .est-hero p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── Layout ── */
+    .est-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 28px;
+      padding-bottom: 80px;
+    }
+    @media (max-width: 960px) {
+      .est-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Input Panel ── */
+    .est-panel {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .est-panel-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .est-field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .est-field .hint {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .est-textarea {
+      width: 100%;
+      min-height: 110px;
+      background: var(--bg-input);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: var(--font-thai);
+      font-size: 0.9rem;
+      padding: 12px 14px;
+      resize: vertical;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .est-textarea:focus {
+      outline: none;
+      border-color: #0078D4;
+    }
+    .est-textarea::placeholder { color: var(--text-muted); }
+
+    /* Task type detect */
+    .task-detect-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .task-detect-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .task-detect-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+    .task-detect-badge.light { background: rgba(16,185,129,0.12); color: #10B981; }
+    .task-detect-badge.medium { background: rgba(245,158,11,0.12); color: #F59E0B; }
+    .task-detect-badge.heavy { background: rgba(239,68,68,0.12); color: #EF4444; }
+    .task-detect-badge.none { background: rgba(139,154,199,0.12); color: var(--text-muted); }
+
+    /* Task type selector */
+    .task-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .task-type-btn {
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 12px 8px;
+      background: var(--bg-input);
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.18s;
+      font-family: var(--font-thai);
+    }
+    .task-type-btn:hover { border-color: rgba(255,255,255,0.2); }
+    .task-type-btn .tt-icon { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+    .task-type-btn .tt-name { font-size: 0.82rem; font-weight: 700; display: block; }
+    .task-type-btn .tt-range { font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 2px; }
+    .task-type-btn.selected-light { border-color: #10B981; background: rgba(16,185,129,0.08); color: #10B981; }
+    .task-type-btn.selected-medium { border-color: #F59E0B; background: rgba(245,158,11,0.08); color: #F59E0B; }
+    .task-type-btn.selected-heavy { border-color: #EF4444; background: rgba(239,68,68,0.08); color: #EF4444; }
+
+    /* App checkboxes */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 8px;
+    }
+    .app-check {
+      display: none;
+    }
+    .app-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      background: var(--bg-input);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .app-label:hover { border-color: rgba(255,255,255,0.2); }
+    .app-check:checked + .app-label {
+      border-color: #0078D4;
+      background: rgba(0,120,212,0.1);
+      color: var(--text-primary);
+    }
+    .app-label .app-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .app-check:checked + .app-label .app-dot {
+      background: #0078D4;
+      border-color: #0078D4;
+    }
+
+    /* Radio / Select rows */
+    .radio-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .radio-opt {
+      display: none;
+    }
+    .radio-label {
+      padding: 7px 14px;
+      background: var(--bg-input);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .radio-label:hover { border-color: rgba(255,255,255,0.2); }
+    .radio-opt:checked + .radio-label {
+      border-color: #8764b8;
+      background: rgba(135,100,184,0.1);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Slider */
+    .est-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .est-slider {
+      flex: 1;
+      accent-color: #0078D4;
+      cursor: pointer;
+      height: 4px;
+    }
+    .est-slider-val {
+      min-width: 80px;
+      text-align: right;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+
+    /* ── Output Panel ── */
+    .est-output {
+      position: sticky;
+      top: 80px;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .est-result-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .est-result-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      margin: 0 0 16px;
+    }
+
+    .est-main-number {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .est-credit-range {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #8764b8;
+      line-height: 1;
+    }
+    .est-credit-unit {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .est-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .est-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .est-row-label { color: var(--text-secondary); }
+    .est-row-val { color: var(--text-primary); font-weight: 600; }
+    .est-row-val.highlight { color: #8764b8; }
+
+    /* Cost card */
+    .est-cost-card {
+      background: rgba(135,100,184,0.07);
+      border: 1px solid rgba(135,100,184,0.22);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .est-cost-header {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8764b8;
+      margin: 0 0 12px;
+    }
+    .est-cost-amount {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .est-cost-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .est-cost-rows {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .est-cost-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+    .est-cost-row span:last-child { color: var(--text-primary); font-weight: 600; }
+
+    /* Recommendation */
+    .est-rec {
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 0.85rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .est-rec.payg { background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.2); }
+    .est-rec.p3   { background: rgba(0,120,212,0.07);  border: 1px solid rgba(0,120,212,0.2); }
+    .est-rec-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .est-rec-text strong { display: block; color: var(--text-primary); margin-bottom: 3px; }
+    .est-rec-text span { color: var(--text-secondary); font-size: 0.8rem; }
+
+    /* Progress bar */
+    .est-bar-wrap {
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      height: 6px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .est-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #8764b8, #0078D4);
+      transition: width 0.4s ease;
+    }
+
+    .est-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+    .est-note a { color: var(--text-muted); text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="Copilot Prompt Hub Home">
+        <span class="logo-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="10" fill="url(#logoGrad)"/>
+            <path d="M8 16C8 11.582 11.582 8 16 8s8 3.582 8 8-3.582 8-8 8" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="16" cy="16" r="3" fill="white"/>
+            <path d="M21 11l2-2M11 21l-2 2" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#0078D4"/>
+                <stop offset="1" stop-color="#50E6FF"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span class="logo-text">Copilot <strong>Prompt Hub</strong></span>
+      </a>
+
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="index.html#prompts" class="nav-link">คลัง Prompt</a>
+        <a href="index.html#agents" class="nav-link">Agent Instructions</a>
+        <a href="index.html#cowork" class="nav-link">M365 Cowork</a>
+        <a href="index.html#tips" class="nav-link">เคล็ดลับ</a>
+        <a href="index.html#compare" class="nav-link">เปรียบเทียบแผน</a>
+        <a href="credit-estimate.html" class="nav-link" style="color:#8764b8;font-weight:700">🪙 Credit Estimator</a>
+        <a href="https://github.com/DekBaCom/copilot-prompt-hub" target="_blank" rel="noopener" class="nav-link nav-github" aria-label="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.579.688.481C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          GitHub
+        </a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <a href="index.html#prompts" class="mobile-nav-link">คลัง Prompt</a>
+    <a href="index.html#agents" class="mobile-nav-link">Agent Instructions</a>
+    <a href="index.html#cowork" class="mobile-nav-link">M365 Cowork</a>
+    <a href="index.html#tips" class="mobile-nav-link">เคล็ดลับ</a>
+    <a href="index.html#compare" class="mobile-nav-link">เปรียบเทียบแผน</a>
+    <a href="credit-estimate.html" class="mobile-nav-link">🪙 Credit Estimator</a>
+    <a href="https://github.com/DekBaCom/copilot-prompt-hub" target="_blank" rel="noopener" class="mobile-nav-link">GitHub</a>
+  </div>
+
+  <main>
+
+    <!-- ========== HERO ========== -->
+    <section class="est-hero">
+      <div class="container">
+        <div class="est-hero-badge">🪙 Copilot Credit Estimator</div>
+        <h1>ประเมิน Copilot Credits ที่ต้องใช้</h1>
+        <p>อธิบาย Task หรือเลือก M365 Apps ที่จะใช้ แล้วระบบจะคำนวณ Credits และต้นทุนโดยประมาณให้ทันที</p>
+      </div>
+    </section>
+
+    <!-- ========== ESTIMATOR ========== -->
+    <section style="padding-bottom:0">
+      <div class="container">
+        <div class="est-layout">
+
+          <!-- ── LEFT: INPUTS ── -->
+          <div class="est-inputs-col">
+
+            <!-- Step 1: Task description -->
+            <div class="est-panel">
+              <h2 class="est-panel-title">
+                <span>📝</span> ขั้นที่ 1 — อธิบาย Task ที่ต้องการ
+              </h2>
+              <div class="est-field">
+                <label for="taskDesc">อธิบายสิ่งที่ต้องการให้ Copilot ทำ</label>
+                <textarea
+                  class="est-textarea"
+                  id="taskDesc"
+                  placeholder="เช่น: วิเคราะห์ข้อมูลยอดขายจาก Excel และ SharePoint แล้วสร้างรายงานสรุปรายเดือนพร้อม Visualization สำหรับทีม Management..."
+                ></textarea>
+                <div class="task-detect-row">
+                  <span class="task-detect-label">ตรวจพบ Task ประเภท:</span>
+                  <span class="task-detect-badge none" id="detectedBadge">— ยังไม่ได้ระบุ</span>
+                </div>
+                <p class="hint">* ระบบวิเคราะห์ keyword อัตโนมัติ แต่คุณสามารถเลือกเองในขั้นถัดไป</p>
+              </div>
+            </div>
+
+            <!-- Step 2: Task type -->
+            <div class="est-panel">
+              <h2 class="est-panel-title">
+                <span>⚡</span> ขั้นที่ 2 — ระบุประเภท Task
+              </h2>
+              <div class="est-field">
+                <label>เลือกประเภท Task (หรือปล่อยให้ระบบ detect อัตโนมัติ)</label>
+                <div class="task-type-grid">
+                  <button class="task-type-btn" data-type="light" id="btnLight">
+                    <span class="tt-icon">⚡</span>
+                    <span class="tt-name">Light</span>
+                    <span class="tt-range">5 – 25 credits</span>
+                  </button>
+                  <button class="task-type-btn" data-type="medium" id="btnMedium">
+                    <span class="tt-icon">⚙️</span>
+                    <span class="tt-name">Medium</span>
+                    <span class="tt-range">25 – 100 credits</span>
+                  </button>
+                  <button class="task-type-btn" data-type="heavy" id="btnHeavy">
+                    <span class="tt-icon">🔥</span>
+                    <span class="tt-name">Heavy</span>
+                    <span class="tt-range">100 – 500 credits</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="est-field">
+                <label>M365 Apps ที่ใช้ใน Task นี้</label>
+                <div class="app-grid">
+                  <div>
+                    <input type="checkbox" class="app-check" id="appWord" value="word">
+                    <label class="app-label" for="appWord"><span class="app-dot"></span>Word</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appExcel" value="excel">
+                    <label class="app-label" for="appExcel"><span class="app-dot"></span>Excel</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appTeams" value="teams">
+                    <label class="app-label" for="appTeams"><span class="app-dot"></span>Teams</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appOutlook" value="outlook">
+                    <label class="app-label" for="appOutlook"><span class="app-dot"></span>Outlook</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appSharePoint" value="sharepoint">
+                    <label class="app-label" for="appSharePoint"><span class="app-dot"></span>SharePoint</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appLoop" value="loop">
+                    <label class="app-label" for="appLoop"><span class="app-dot"></span>Loop</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appPlanner" value="planner">
+                    <label class="app-label" for="appPlanner"><span class="app-dot"></span>Planner</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appViva" value="viva">
+                    <label class="app-label" for="appViva"><span class="app-dot"></span>Viva</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appWhiteboard" value="whiteboard">
+                    <label class="app-label" for="appWhiteboard"><span class="app-dot"></span>Whiteboard</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appFabric" value="fabric">
+                    <label class="app-label" for="appFabric"><span class="app-dot"></span>Fabric</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appD365" value="d365">
+                    <label class="app-label" for="appD365"><span class="app-dot"></span>Dynamics 365</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" class="app-check" id="appExternal" value="external">
+                    <label class="app-label" for="appExternal"><span class="app-dot"></span>External API</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Parameters -->
+            <div class="est-panel">
+              <h2 class="est-panel-title">
+                <span>⚙️</span> ขั้นที่ 3 — ตั้งค่า Parameters
+              </h2>
+
+              <div class="est-field">
+                <label>Model ที่ใช้</label>
+                <div class="radio-row">
+                  <input type="radio" class="radio-opt" name="model" id="modelSonnet" value="sonnet" checked>
+                  <label class="radio-label" for="modelSonnet">Sonnet 4.6 (1×)</label>
+
+                  <input type="radio" class="radio-opt" name="model" id="modelOpus" value="opus">
+                  <label class="radio-label" for="modelOpus">Opus 4.8 (2.5×)</label>
+
+                  <input type="radio" class="radio-opt" name="model" id="modelCowork1" value="cowork1">
+                  <label class="radio-label" for="modelCowork1">Cowork 1 (1.5×)</label>
+                </div>
+              </div>
+
+              <div class="est-field">
+                <label>ขนาด Context / แหล่งข้อมูล</label>
+                <div class="radio-row">
+                  <input type="radio" class="radio-opt" name="context" id="ctxSmall" value="small" checked>
+                  <label class="radio-label" for="ctxSmall">เล็ก (&lt;10 ไฟล์, 1×)</label>
+
+                  <input type="radio" class="radio-opt" name="context" id="ctxMedium" value="medium">
+                  <label class="radio-label" for="ctxMedium">กลาง (10–50 ไฟล์, 1.5×)</label>
+
+                  <input type="radio" class="radio-opt" name="context" id="ctxLarge" value="large">
+                  <label class="radio-label" for="ctxLarge">ใหญ่ (50+ ไฟล์, 2.5×)</label>
+                </div>
+              </div>
+
+              <div class="est-field">
+                <label>ความซับซ้อนของ Tool Calls / Automation</label>
+                <div class="radio-row">
+                  <input type="radio" class="radio-opt" name="toolcalls" id="tcNone" value="none" checked>
+                  <label class="radio-label" for="tcNone">ไม่มี (+0)</label>
+
+                  <input type="radio" class="radio-opt" name="toolcalls" id="tcFew" value="few">
+                  <label class="radio-label" for="tcFew">น้อย 1–3 (+5)</label>
+
+                  <input type="radio" class="radio-opt" name="toolcalls" id="tcMany" value="many">
+                  <label class="radio-label" for="tcMany">ปานกลาง 4–9 (+20)</label>
+
+                  <input type="radio" class="radio-opt" name="toolcalls" id="tcExtensive" value="extensive">
+                  <label class="radio-label" for="tcExtensive">มาก 10+ (+50)</label>
+                </div>
+              </div>
+
+              <div class="est-field">
+                <label for="taskCount">จำนวน Task ต่อเดือน</label>
+                <div class="est-slider-wrap">
+                  <input type="range" class="est-slider" id="taskCount" min="1" max="500" value="20" step="1">
+                  <span class="est-slider-val"><span id="taskCountVal">20</span> tasks/เดือน</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ── RIGHT: OUTPUT ── -->
+          <div class="est-output">
+
+            <!-- Credits per task -->
+            <div class="est-result-card">
+              <p class="est-result-title">Credits ต่อ Task (ประมาณ)</p>
+              <div class="est-main-number">
+                <div class="est-credit-range" id="creditsPerTask">—</div>
+                <div class="est-credit-unit">credits / task</div>
+              </div>
+              <div class="est-bar-wrap">
+                <div class="est-bar-fill" id="barFill" style="width:0%"></div>
+              </div>
+              <div class="est-breakdown">
+                <div class="est-row">
+                  <span class="est-row-label">Task Type</span>
+                  <span class="est-row-val" id="outTaskType">—</span>
+                </div>
+                <div class="est-row">
+                  <span class="est-row-label">Model multiplier</span>
+                  <span class="est-row-val" id="outModel">—</span>
+                </div>
+                <div class="est-row">
+                  <span class="est-row-label">Context multiplier</span>
+                  <span class="est-row-val" id="outContext">—</span>
+                </div>
+                <div class="est-row">
+                  <span class="est-row-label">Tool calls (+credits)</span>
+                  <span class="est-row-val" id="outTools">—</span>
+                </div>
+                <div class="est-row">
+                  <span class="est-row-label">Apps selected (+credits)</span>
+                  <span class="est-row-val" id="outApps">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Monthly cost -->
+            <div class="est-cost-card">
+              <p class="est-cost-header">💰 ประมาณการต้นทุนรายเดือน</p>
+              <div class="est-cost-amount" id="costMonthly">—</div>
+              <div class="est-cost-sub" id="costMonthlySub">กรุณาเลือก Task Type ก่อน</div>
+              <div class="est-cost-rows">
+                <div class="est-cost-row">
+                  <span>Credits รายเดือน</span>
+                  <span id="outMonthlyCredits">—</span>
+                </div>
+                <div class="est-cost-row">
+                  <span>จำนวน Tasks</span>
+                  <span id="outTasksPerMonth">—</span>
+                </div>
+                <div class="est-cost-row">
+                  <span>ราคาต่อ Credit</span>
+                  <span>$0.01 (Pay-as-you-go)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recommendation -->
+            <div class="est-rec payg" id="recBox">
+              <span class="est-rec-icon">💡</span>
+              <div class="est-rec-text">
+                <strong id="recTitle">เลือก Task Type เพื่อดูคำแนะนำ</strong>
+                <span id="recDesc">กรอกข้อมูลทางซ้ายเพื่อเริ่มคำนวณ</span>
+              </div>
+            </div>
+
+            <p class="est-note">
+              * ตัวเลขเป็นการประมาณการเท่านั้น Microsoft ยังไม่ได้เปิดเผย credit ต่อ task อย่างเป็นทางการ<br>
+              ข้อมูลจาก <a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/16/copilot-cowork-is-now-generally-available/" target="_blank" rel="noopener">Microsoft M365 Blog — มิ.ย. 2026</a>
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="Copilot Prompt Hub">
+            <span class="logo-icon">
+              <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="10" fill="url(#footerLogoGrad)"/><path d="M8 16C8 11.582 11.582 8 16 8s8 3.582 8 8-3.582 8-8 8" stroke="white" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="16" r="3" fill="white"/><defs><linearGradient id="footerLogoGrad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#0078D4"/><stop offset="1" stop-color="#50E6FF"/></linearGradient></defs></svg>
+            </span>
+            <span class="logo-text">Copilot <strong>Prompt Hub</strong></span>
+          </a>
+          <p class="footer-tagline">คลัง Prompt และ Agent Instructions สำหรับ Microsoft Copilot ภาษาไทย</p>
+        </div>
+        <div class="footer-links">
+          <h4>เมนูหลัก</h4>
+          <ul>
+            <li><a href="index.html#prompts">คลัง Prompt</a></li>
+            <li><a href="index.html#agents">Agent Instructions</a></li>
+            <li><a href="index.html#cowork">M365 Cowork</a></li>
+            <li><a href="index.html#compare">เปรียบเทียบแผน</a></li>
+            <li><a href="index.html#license-info">License &amp; Credits</a></li>
+            <li><a href="credit-estimate.html">Credit Estimator</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>ทรัพยากร</h4>
+          <ul>
+            <li><a href="https://copilot.microsoft.com" target="_blank" rel="noopener">Microsoft Copilot</a></li>
+            <li><a href="https://www.microsoft.com/en-us/microsoft-365-copilot/pricing" target="_blank" rel="noopener">Copilot Pricing</a></li>
+            <li><a href="https://www.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-studio" target="_blank" rel="noopener">Copilot Studio</a></li>
+            <li><a href="https://github.com/DekBaCom/copilot-prompt-hub" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Copilot Prompt Hub · สร้างด้วย ❤️ เพื่อชุมชนไทย</p>
+        <p class="footer-contributor">Contributed by <strong>Mr. Abdulloh Etaeluengoh</strong> · <a href="mailto:Abdulloh.eg@gmail.com">Abdulloh.eg@gmail.com</a></p>
+        <p class="footer-disclaimer">ไม่ใช่ผลิตภัณฑ์อย่างเป็นทางการของ Microsoft</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ── Credit Model ──
+    const TASK_TYPES = {
+      light:  { min: 5,   max: 25,  label: '⚡ Light',  barPct: 15  },
+      medium: { min: 25,  max: 100, label: '⚙️ Medium', barPct: 45  },
+      heavy:  { min: 100, max: 500, label: '🔥 Heavy',  barPct: 90  }
+    };
+    const MODEL_MULT = { sonnet: 1.0, opus: 2.5, cowork1: 1.5 };
+    const MODEL_LABEL = { sonnet: 'Sonnet 4.6 (1×)', opus: 'Opus 4.8 (2.5×)', cowork1: 'Cowork 1 (1.5×)' };
+    const CTX_MULT = { small: 1.0, medium: 1.5, large: 2.5 };
+    const CTX_LABEL = { small: '1×  (เล็ก)', medium: '1.5× (กลาง)', large: '2.5× (ใหญ่)' };
+    const TOOL_ADD = { none: 0, few: 5, many: 20, extensive: 50 };
+    const TOOL_LABEL = { none: '+0', few: '+5', many: '+20', extensive: '+50' };
+    const APP_CREDITS_EACH = 3;
+
+    // ── Keyword detection ──
+    const KEYWORDS = {
+      light: ['สรุป','draft','แปล','เขียน','อีเมล','email','ร่าง','ตอบ','แปลงภาษา','สรุปเนื้อหา','อธิบาย','แนะนำ'],
+      medium: ['วิเคราะห์','รายงาน','ประชุม','แผน','สร้าง','จัดการ','ติดตาม','sprint','planner','loop','ออกแบบ','เปรียบ'],
+      heavy:  ['research','หลายระบบ','audit','financial','aggregate','ข้ามระบบ','multi','ครอบคลุม','dynamics','fabric','อัตโนมัติ','autonomous','กว้าง','ลึก','ซับซ้อน']
+    };
+
+    // State
+    let state = {
+      taskType: null,   // 'light'|'medium'|'heavy'
+      detected: null,
+      model: 'sonnet',
+      context: 'small',
+      toolcalls: 'none',
+      appsCount: 0,
+      tasksPerMonth: 20
+    };
+
+    // ── DOM refs ──
+    const taskDescEl   = document.getElementById('taskDesc');
+    const detectedBadge = document.getElementById('detectedBadge');
+    const btnLight     = document.getElementById('btnLight');
+    const btnMedium    = document.getElementById('btnMedium');
+    const btnHeavy     = document.getElementById('btnHeavy');
+    const taskCountSlider = document.getElementById('taskCount');
+    const taskCountVal = document.getElementById('taskCountVal');
+
+    // Output refs
+    const outCreditsPerTask  = document.getElementById('creditsPerTask');
+    const outTaskType        = document.getElementById('outTaskType');
+    const outModel           = document.getElementById('outModel');
+    const outContext         = document.getElementById('outContext');
+    const outTools           = document.getElementById('outTools');
+    const outApps            = document.getElementById('outApps');
+    const barFill            = document.getElementById('barFill');
+    const costMonthly        = document.getElementById('costMonthly');
+    const costMonthlySub     = document.getElementById('costMonthlySub');
+    const outMonthlyCredits  = document.getElementById('outMonthlyCredits');
+    const outTasksPerMonth   = document.getElementById('outTasksPerMonth');
+    const recBox             = document.getElementById('recBox');
+    const recTitle           = document.getElementById('recTitle');
+    const recDesc            = document.getElementById('recDesc');
+
+    // ── Detect task type from text ──
+    function detectTaskType(text) {
+      if (!text.trim()) return null;
+      const t = text.toLowerCase();
+      let scores = { light: 0, medium: 0, heavy: 0 };
+      for (const [type, kws] of Object.entries(KEYWORDS)) {
+        kws.forEach(kw => { if (t.includes(kw)) scores[type]++; });
+      }
+      const max = Math.max(...Object.values(scores));
+      if (max === 0) return null;
+      return Object.keys(scores).find(k => scores[k] === max);
+    }
+
+    function updateDetectedBadge(type) {
+      const map = {
+        light:  { cls: 'light',  text: '⚡ Light Task' },
+        medium: { cls: 'medium', text: '⚙️ Medium Task' },
+        heavy:  { cls: 'heavy',  text: '🔥 Heavy Task' },
+        null:   { cls: 'none',   text: '— ยังไม่ได้ระบุ' }
+      };
+      const info = map[type] || map[null];
+      detectedBadge.className = 'task-detect-badge ' + info.cls;
+      detectedBadge.textContent = info.text;
+    }
+
+    // ── Task type buttons ──
+    function setTaskType(type) {
+      state.taskType = type;
+      [btnLight, btnMedium, btnHeavy].forEach(b => {
+        b.className = 'task-type-btn';
+      });
+      if (type === 'light')  btnLight.className  = 'task-type-btn selected-light';
+      if (type === 'medium') btnMedium.className = 'task-type-btn selected-medium';
+      if (type === 'heavy')  btnHeavy.className  = 'task-type-btn selected-heavy';
+      calculate();
+    }
+
+    btnLight.addEventListener('click', () => setTaskType(state.taskType === 'light' ? null : 'light'));
+    btnMedium.addEventListener('click', () => setTaskType(state.taskType === 'medium' ? null : 'medium'));
+    btnHeavy.addEventListener('click', () => setTaskType(state.taskType === 'heavy' ? null : 'heavy'));
+
+    // ── Text input ──
+    taskDescEl.addEventListener('input', () => {
+      const detected = detectTaskType(taskDescEl.value);
+      state.detected = detected;
+      updateDetectedBadge(detected);
+      // Auto-set task type if user hasn't manually chosen
+      if (detected && !state.taskType) {
+        setTaskType(detected);
+      } else {
+        calculate();
+      }
+    });
+
+    // ── App checkboxes ──
+    document.querySelectorAll('.app-check').forEach(cb => {
+      cb.addEventListener('change', () => {
+        state.appsCount = document.querySelectorAll('.app-check:checked').length;
+        calculate();
+      });
+    });
+
+    // ── Radios ──
+    document.querySelectorAll('input[name="model"]').forEach(r => {
+      r.addEventListener('change', () => { state.model = r.value; calculate(); });
+    });
+    document.querySelectorAll('input[name="context"]').forEach(r => {
+      r.addEventListener('change', () => { state.context = r.value; calculate(); });
+    });
+    document.querySelectorAll('input[name="toolcalls"]').forEach(r => {
+      r.addEventListener('change', () => { state.toolcalls = r.value; calculate(); });
+    });
+
+    // ── Slider ──
+    taskCountSlider.addEventListener('input', () => {
+      state.tasksPerMonth = parseInt(taskCountSlider.value);
+      taskCountVal.textContent = state.tasksPerMonth;
+      calculate();
+    });
+
+    // ── Main calculate function ──
+    function calculate() {
+      const type = state.taskType || state.detected;
+      if (!type) {
+        outCreditsPerTask.textContent = '—';
+        outTaskType.textContent = '—';
+        outModel.textContent = '—';
+        outContext.textContent = '—';
+        outTools.textContent = '—';
+        outApps.textContent = '—';
+        barFill.style.width = '0%';
+        costMonthly.textContent = '—';
+        costMonthlySub.textContent = 'กรุณาเลือก Task Type ก่อน';
+        outMonthlyCredits.textContent = '—';
+        outTasksPerMonth.textContent = state.tasksPerMonth + ' tasks';
+        recTitle.textContent = 'เลือก Task Type เพื่อดูคำแนะนำ';
+        recDesc.textContent = 'กรอกข้อมูลทางซ้ายเพื่อเริ่มคำนวณ';
+        return;
+      }
+
+      const tt   = TASK_TYPES[type];
+      const mMul = MODEL_MULT[state.model];
+      const cMul = CTX_MULT[state.context];
+      const tAdd = TOOL_ADD[state.toolcalls];
+      const aAdd = state.appsCount * APP_CREDITS_EACH;
+
+      const minC = Math.round(tt.min * mMul * cMul + tAdd + aAdd);
+      const maxC = Math.round(tt.max * mMul * cMul + tAdd + aAdd);
+
+      const monthlyMin = minC * state.tasksPerMonth;
+      const monthlyMax = maxC * state.tasksPerMonth;
+
+      const costMin = (monthlyMin * 0.01).toFixed(2);
+      const costMax = (monthlyMax * 0.01).toFixed(2);
+      const costMinTHB = Math.round(monthlyMin * 0.01 * 35);
+      const costMaxTHB = Math.round(monthlyMax * 0.01 * 35);
+
+      // Update outputs
+      outCreditsPerTask.textContent = minC + ' – ' + maxC;
+      outTaskType.textContent = tt.label;
+      outModel.textContent = MODEL_LABEL[state.model];
+      outContext.textContent = CTX_LABEL[state.context];
+      outTools.textContent = TOOL_LABEL[state.toolcalls];
+      outApps.textContent = state.appsCount > 0
+        ? state.appsCount + ' apps (+' + aAdd + ' credits)'
+        : 'ไม่มี (+0)';
+
+      barFill.style.width = tt.barPct + '%';
+
+      costMonthly.textContent = '$' + costMin + ' – $' + costMax;
+      costMonthlySub.textContent = '≈ ' + costMinTHB.toLocaleString() + ' – ' + costMaxTHB.toLocaleString() + ' บาท/เดือน';
+      outMonthlyCredits.textContent = monthlyMin.toLocaleString() + ' – ' + monthlyMax.toLocaleString();
+      outTasksPerMonth.textContent = state.tasksPerMonth + ' tasks';
+
+      // Recommendation
+      const avgCost = (parseFloat(costMin) + parseFloat(costMax)) / 2;
+      if (avgCost < 50) {
+        recBox.className = 'est-rec payg';
+        recTitle.textContent = '💳 แนะนำ: Pay-as-you-go';
+        recDesc.textContent = 'ต้นทุนรายเดือนต่ำ — การจ่ายแบบ $0.01/credit คุ้มค่าที่สุด ไม่ต้อง commit ล่วงหน้า';
+      } else if (avgCost < 200) {
+        recBox.className = 'est-rec payg';
+        recTitle.textContent = '💳 Pay-as-you-go หรือพิจารณา P3';
+        recDesc.textContent = 'หากใช้งานสม่ำเสมอ P3 Prepaid จะให้ส่วนลดที่คุ้มค่ากว่า ควรเปรียบเทียบกับโปรโมชั่นปัจจุบัน';
+      } else {
+        recBox.className = 'est-rec p3';
+        recTitle.textContent = '📦 แนะนำ: P3 Prepaid';
+        recDesc.textContent = 'การใช้งานสูง — P3 Prepaid ช่วยลดต้นทุนได้มาก เหมาะสำหรับองค์กรที่ใช้ Copilot Cowork อย่างต่อเนื่อง';
+      }
+    }
+
+    // ── Mobile menu (reuse same logic) ──
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        mobileMenuBtn.setAttribute('aria-expanded', open);
+        mobileNav.setAttribute('aria-hidden', !open);
+      });
+    }
+
+    // Init
+    calculate();
+  })();
+  </script>
+
+</body>
+</html>
