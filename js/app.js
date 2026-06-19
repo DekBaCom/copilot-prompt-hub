@@ -597,7 +597,7 @@
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
       const plan = tab.dataset.plan;
-      table.classList.remove('focus-free', 'focus-paid', 'focus-studio');
+      table.classList.remove('focus-free', 'focus-business', 'focus-paid', 'focus-studio');
       if (plan !== 'all') table.classList.add('focus-' + plan);
     });
   });

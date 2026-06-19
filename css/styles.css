@@ -1208,26 +1208,44 @@ h1, h2, h3, h4, h5 {
 
 /* highlight column when tab is active */
 .compare-table .plan-col { transition: background 0.2s; }
+.compare-table.focus-free .plan-business,
 .compare-table.focus-free .plan-paid,
 .compare-table.focus-free .plan-studio { opacity: 0.35; }
+.compare-table.focus-business .plan-free,
+.compare-table.focus-business .plan-paid,
+.compare-table.focus-business .plan-studio { opacity: 0.35; }
 .compare-table.focus-paid .plan-free,
+.compare-table.focus-paid .plan-business,
 .compare-table.focus-paid .plan-studio { opacity: 0.35; }
 .compare-table.focus-studio .plan-free,
+.compare-table.focus-studio .plan-business,
 .compare-table.focus-studio .plan-paid { opacity: 0.35; }
 
 .compare-table td[data-plan],
 .compare-table th[data-plan] { transition: opacity 0.2s; }
+.compare-table.focus-free td[data-plan="business"],
 .compare-table.focus-free td[data-plan="paid"],
 .compare-table.focus-free td[data-plan="studio"],
+.compare-table.focus-free th[data-plan="business"],
 .compare-table.focus-free th[data-plan="paid"],
 .compare-table.focus-free th[data-plan="studio"] { opacity: 0.3; }
+.compare-table.focus-business td[data-plan="free"],
+.compare-table.focus-business td[data-plan="paid"],
+.compare-table.focus-business td[data-plan="studio"],
+.compare-table.focus-business th[data-plan="free"],
+.compare-table.focus-business th[data-plan="paid"],
+.compare-table.focus-business th[data-plan="studio"] { opacity: 0.3; }
 .compare-table.focus-paid td[data-plan="free"],
+.compare-table.focus-paid td[data-plan="business"],
 .compare-table.focus-paid td[data-plan="studio"],
 .compare-table.focus-paid th[data-plan="free"],
+.compare-table.focus-paid th[data-plan="business"],
 .compare-table.focus-paid th[data-plan="studio"] { opacity: 0.3; }
 .compare-table.focus-studio td[data-plan="free"],
+.compare-table.focus-studio td[data-plan="business"],
 .compare-table.focus-studio td[data-plan="paid"],
 .compare-table.focus-studio th[data-plan="free"],
+.compare-table.focus-studio th[data-plan="business"],
 .compare-table.focus-studio th[data-plan="paid"] { opacity: 0.3; }
 
 .compare-note {
