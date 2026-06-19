@@ -1353,6 +1353,11 @@ h1, h2, h3, h4, h5 {
 
 .license-price-tag--credits span { color: #8764b8; }
 
+.license-services + .license-services {
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+}
+
 .license-services-title {
   font-size: 0.75rem;
   font-weight: 700;
