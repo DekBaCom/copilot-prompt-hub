@@ -553,6 +553,14 @@
       });
     });
 
+    // Cowork section cards → open modal
+    document.querySelectorAll('[data-cowork-id]').forEach(card => {
+      card.addEventListener('click', () => {
+        const p = PROMPTS.find(pr => pr.id === card.dataset.coworkId);
+        if (p) openModal(p);
+      });
+    });
+
     // Keyboard navigation for cards
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && e.target.classList.contains('prompt-card')) {
